@@ -28,32 +28,34 @@ const SignUp = () => {
     setLoading(true);
   
     try {
-      // Загрузка файла
-      const storageRef = ref(storage, `images/${Date.now() + userName}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      console.log(storageRef);
-      
-     
-      await uploadTask;
-  
-      // Получение картинки (url) загруженного файла
-      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-      
       // Регистрация пользователя
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
-      await updateProfile(user, {
-        displayName: userName,
-        photoURL: downloadURL,
-      });
-  
-      await setDoc(doc(db, 'users', user.uid), {
+
+      const profileUpdates = {
         uid: user.uid,
         displayName: userName,
         email: email,
-        photoURL: downloadURL,
-      });
+      };
+
+      if (file) {
+        // Загрузка файла
+        const storageRef = ref(storage, `images/${Date.now() + userName}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        await uploadTask;
+
+        // Получение картинки (url) загруженного файла
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+        profileUpdates.photoURL = downloadURL;
+      }
+
+      // Обновление профиля пользователя
+      await updateProfile(user, profileUpdates);
+
+      // Добавление записи в базу данных
+      await setDoc(doc(db, 'users', user.uid), profileUpdates);
+
       setLoading(false);
       toast.success('Аккаунт создан!');
       navigate('/shop');
