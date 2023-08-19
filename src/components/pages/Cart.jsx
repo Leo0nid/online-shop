@@ -10,7 +10,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  console.log(cartItems);
   //удалить товар
   const cartItemDelete = (product) => {
     dispatch(cartActions.removeItemFromCart(product));
@@ -124,7 +123,7 @@ const Cart = () => {
           ) : (
             <div className="cart__basket">
               <h1>Ууупс в корзине пусто вы ничего не выбрали</h1>
-              <Link to={"/"}>На главную страницу</Link>
+              <Link to={"/"}>Перейти к покупкам</Link>
             </div>
           )}
         </div>
