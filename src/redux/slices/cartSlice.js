@@ -25,7 +25,14 @@ const cartSlice = createSlice({
       const itemToRemove = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== itemToRemove.id);
     },
-  
+
+    changeItemQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+      const itemToChange = state.cartItems.find((item) => item.id === id);
+      if(itemToChange){
+        itemToChange.quantity = Math.max(1, quantity);
+      }
+    }
   },
 });
 
