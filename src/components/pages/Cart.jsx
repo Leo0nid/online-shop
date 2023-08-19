@@ -50,16 +50,16 @@ const Cart = () => {
                     <div className="quantity">
                       <img
                         className="cart_quantity"
-                        onClick={() => changeQuantity(item, item.quantity + 1)}
-                        src={plus}
-                        alt="plus icon"
+                        onClick={() => changeQuantity(item, item.quantity - 1)}
+                        src={minus}
+                        alt="minus icon"
                       />
                       <h3 className="cart__count">{item.quantity}шт.</h3>
                       <img
                         className="cart_quantity"
-                        onClick={() => changeQuantity(item, item.quantity - 1)}
-                        src={minus}
-                        alt="minus icon"
+                        onClick={() => changeQuantity(item, item.quantity + 1)}
+                        src={plus}
+                        alt="plus icon"
                       />
                     </div>
                     <div
