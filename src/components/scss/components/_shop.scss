@@ -49,12 +49,62 @@
   width: 35px;
   height: 35px;
   margin: 0 0 5px 10px;
- 
-  
 }
 .active {
-  & path{
+  & path {
     fill: rgb(218, 218, 218);
   }
-  
+}
+
+.modal {
+  width: 70%;
+  height: 80vh;
+  position: absolute;
+  top: 2%;
+  left: 15%;
+  background-color: white;
+  padding: 2%;
+  box-shadow: 0 0 8px #e0e0e0;
+}
+
+.modal-block {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  // background-color: aqua;
+  img {
+    max-width: 50%;
+    max-height: 70vh;
+  }
+  button {
+    position: absolute;
+    right: 1%;
+    top: 1%;
+  }
+}
+
+.modal__descr-block {
+  width: 45%;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  gap: 2%;
+  background-color: #f6f6f6;
+  h3 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 3%;
+  }
+}
+.modal__article {
+  font-size: 20px;
+}
+.modal__price {
+  font-size: 20px;
+}
+.modal__descr-title {
+  font-size: 18px;
+  font-weight: 500;
 }
