@@ -18,7 +18,11 @@ const Header = () => {
   const navigate = useNavigate();
   //переход на регистрацию
   const handleAvatarClick = () => {
-    navigate('/login');
+    if (currentUser) {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
   };
   //выход из профиля
   const handleLogout = async () => {
