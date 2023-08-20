@@ -11,9 +11,18 @@ const Cart = () => {
   //удалить товар
   const cartItemDelete = (product) => {
     dispatch(cartActions.removeItemFromCart(product));
+
+    const localStorageCart = JSON.parse(localStorage.getItem("products")) || []
+    const updateLocalStorageCart = localStorageCart.filter((item) => item.id !== product.id)
+    localStorage.setItem('products' , JSON.stringify(updateLocalStorageCart))
   }
   //сумма товаров в корзине
   const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
+  const localStorageItems = JSON.parse(localStorage.getItem("products"))
+  console.log(localStorageItems);
+
+
   return (
     <div className="cart">
       <div className="container">
@@ -22,7 +31,7 @@ const Cart = () => {
           <h2 className='cart__title'>Корзина</h2>
           <h2 className='cart__title-total'>Сумма : {totalAmount} </h2>
           </div>
-          {cartItems.map((item) => (
+          {localStorageItems.map((item) => (
             <div key={item.id} className="cart__item">
               <img src={item.url} alt="img" className="cart__image" />
               <div className="cart__desc">
