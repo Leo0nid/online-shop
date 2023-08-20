@@ -86,6 +86,7 @@
 
 .modal__descr-block {
   width: 45%;
+  height: 100%;
   padding: 2%;
   display: flex;
   flex-direction: column;
@@ -107,4 +108,45 @@
 .modal__descr-title {
   font-size: 18px;
   font-weight: 500;
+}
+
+@media all and (max-width: 1024px) {
+  .modal__descr-block {
+    height: 274px;
+  }
+  .modal__descr {
+    height: 100%;
+    overflow: scroll;
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .modal {
+    height: auto;
+    width: 90%;
+    left: 5%;
+    padding: 2% 4%;
+  }
+}
+
+@media all and (max-width: 425px) {
+  .modal {
+    height: auto;
+    width: 90%;
+    left: 3.5%;
+    padding: 2% 4%;
+  }
+  .modal-block {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    img {
+      width: 100%;
+      margin-bottom: 2%;
+    }
+  }
+  .modal__descr-block {
+    height: auto;
+    width: 100%;
+  }
 }
