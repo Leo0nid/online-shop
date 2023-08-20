@@ -1,4 +1,9 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
+import img1 from './../img/1.png'
+import img2 from './../img/2.png'
+import img3 from './../img/3.png'
+import img4 from './../img/4.png'
+import img5 from './../img/5.png'
 
 
 export class Categories extends Component {
@@ -43,21 +48,24 @@ export class Categories extends Component {
   }
 
   render() {
+    let prods = [];
+    let prodList = this.state.Products;
+    for (let i = 0; i < prodList.length; i++) {
+      console.log('scr/components/img/' + prodList[i].img);
+      prods.push(
+      <>
+        <img src={img1} />
+        <img src={img2} />
+        <img src={img3} />
+        <img src={img4} />
+        <img src={img5} />
+        <p className='itemTitle'>{prodList[i].title}</p>
+      </>
+      );
+    }
     return (
-      <div>SFDdfdf
-        <div>
-          <For each="prod" in={this.state.Products}>
-            <div>
-              {prod.key}
-            </div>
-            <div>
-              {prod.title}
-            </div>
-            <div>
-              {prod.img}
-            </div>
-          </For>
-        </div>
+      <div>
+        {prods}
       </div>
     );
   }

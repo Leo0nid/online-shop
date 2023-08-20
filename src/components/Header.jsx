@@ -59,23 +59,23 @@ const Header = () => {
             </div>
           </div>
 
-          <div class="hamburger-menu">
+          <div className="hamburger-menu">
             <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
+            <label className="menu__btn" for="menu__toggle">
               <span></span>
             </label>            
-            <ul class="menu__box">
+            <ul className="menu__box">
               <li>
-                <Link to="/#" class="menu__item">Магазин</Link>
+                <Link to="/#" className="menu__item">Магазин</Link>
               </li>
               <li>
-                <Link to="/categories#" class="menu__item">Категория</Link>
+                <Link to="/categories#" className="menu__item">Категория</Link>
               </li>
               <li>
-                <Link to="/favorites#" class="menu__item">Избранное</Link>
+                <Link to="/favorites#" className="menu__item">Избранное</Link>
               </li>
               <li>
-                <Link to="/cart#" class="menu__item">Корзина</Link>
+                <Link to="/cart#" className="menu__item">Корзина</Link>
               </li>
             </ul>
           </div>
