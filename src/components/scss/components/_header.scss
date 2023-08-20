@@ -175,7 +175,15 @@
   }
   .header__nav-list li a:hover {
     color: rgb(33, 152, 152);
+
   }
+  
+  .header__profile {
+  display: flex;
+  align-items: center;
+  
+}
+  
   .hamburger-menu {
     display: none;
   }
@@ -188,4 +196,13 @@
   .menu__item {
     display: inline;
   }
+}
+.header__logout {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+.header__avatar {
+  width: 35px;
+  height: 35px;
 }

@@ -58,7 +58,7 @@ const SignUp = () => {
 
       setLoading(false);
       toast.success('Аккаунт создан!');
-      navigate('/shop');
+      navigate('/');
     } catch (error) {
       setLoading(false);
       toast.error('Ошибка!');

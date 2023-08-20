@@ -11,18 +11,25 @@ const Favorites = () => {
   //удалить товар
   const removeItemFromFavorites = (product) => {
     dispatch(favoritesActions.removeItemFromFavorites(product));
+
+    const localStorageFavorites = JSON.parse(localStorage.getItem('favoritesProducts')) || [];
+    const updateLocalStorageFavorites = localStorageFavorites.filter(
+      (item) => item.id !== product.id,
+    );
+    localStorage.setItem('favoritesProducts', JSON.stringify(updateLocalStorageFavorites));
   };
+  const localStorageFavorites = JSON.parse(localStorage.getItem('favoritesProducts'));
   return (
     <div className="favorites">
       <div className="container">
         <div className="favorites__wrapper">
           <h2 className="favorites__title">Избранное</h2>
           {favoritesItems &&
-            favoritesItems.map((item) => (
+            localStorageFavorites &&
+            localStorageFavorites.map((item) => (
               <div key={item.id} className="favorites__item">
                 <img src={item.url} alt="img" className="favorites__image" />
-                <div
-                  className="favorites__description">
+                <div className="favorites__description">
                   <h3 className="favorites__name">{item.name}</h3>
                   <p className="favorites__desc">{item.desc} RU</p>
                   <p className="favorites__price">{item.price} RU</p>

@@ -1,58 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../firebase.js';
-import { collection, getDocs } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../../redux/slices/cartSlice.js';
 import { favoritesActions } from '../../redux/slices/favoritesSlice.js';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const searchValue = useSelector((state) => state.search.searchValue);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getProductsFromFirestore = async () => {
-      try {
-        const productsCollection = collection(db, 'products');
-        const snapshot = await getDocs(productsCollection);
-        const arrayData = snapshot.docs.map((doc) => doc.data());
-
-        setProducts(arrayData);
-        console.log(arrayData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getProductsFromFirestore();
+    axios.get('https://64e08b5750713530432c6be6.mockapi.io/products')
+      .then(response => {
+        setProducts(response.data);
+        console.log(setProducts);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }, []);
+//поиск
   useEffect(() => {
-    //поисковик
     const filtered = products.filter((product) => product.name.toLowerCase().includes(searchValue));
     setFilteredProducts(filtered);
     console.log(filtered);
   }, [searchValue, products]);
-
-  //добавить товар
+//добавить в корзину
   const addToCartButton = (product) => {
     dispatch(cartActions.addItemToCart(product));
+    let arr = JSON.parse(localStorage.getItem("products")) || [];
+    const existingItem = arr.find(item => item.id === product.id); 
+    if (!existingItem) {
+      arr.push({ ...product, quantity: 1 });
+    } else {
+      existingItem.quantity++;
+    } 
+    localStorage.setItem("products", JSON.stringify(arr));
     console.log(product);
     toast.success('Добавлено в корзину!');
   };
-
-  const [activeHearts, setActiveHearts] = useState({});
-
+//добавить в избранное
   const toggleFavorite = (product) => {
     setActiveHearts((prevActiveHearts) => ({
       ...prevActiveHearts,
       [product.id]: !prevActiveHearts[product.id],
     }));
-
     dispatch(favoritesActions.addItemToFavorites(product));
+    let arr = JSON.parse(localStorage.getItem("favoritesProducts")) || [];
+    const existingItem = arr.find(item => item.id === product.id); 
+    if (!existingItem) {
+      arr.push({ ...product, quantity: 1 });
+    } else {
+      existingItem.quantity++;
+    } 
+    localStorage.setItem("favoritesProducts", JSON.stringify(arr));
     console.log(product);
     toast.success('Добавлено в избранное!');
   };
@@ -71,7 +77,6 @@ const Shop = () => {
                 <p className="shop__text">{product.price} RU</p>
                 <p className="shop__text">Артикул {product.article} </p>
               </div>
-
               <div className="shop__button">
                 <motion.button
                   onClick={() => addToCartButton(product)}
