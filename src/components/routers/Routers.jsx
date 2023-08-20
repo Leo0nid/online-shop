@@ -7,6 +7,7 @@ import Cart from '../pages/Cart';
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp';
 import PageTransition from '../PageTransition';
+import Categories from '../pages/Categories';
 
 
 
@@ -15,12 +16,12 @@ const Routers = () => {
     <>
       <Header />
       <Routes>
-      <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-      <Route path="/signup" element={<PageTransition><SignUp /></PageTransition>} />
-      <Route path="/" element={<PageTransition><Shop /></PageTransition>} />
+        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="/signup" element={<PageTransition><SignUp /></PageTransition>} />
+        <Route path="/" element={<PageTransition><Shop /></PageTransition>} />
+        <Route path="/categories" element={<PageTransition> < Categories /> </PageTransition>} />
         <Route path="/favorites" element={<PageTransition> < Favorites /> </PageTransition>} />
         <Route path="/cart" element={<PageTransition>< Cart /></PageTransition>} />
-        
       </Routes>
     </>
   );
