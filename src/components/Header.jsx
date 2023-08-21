@@ -7,13 +7,11 @@ import logout from '../components/assets/icons/logout.png';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import useAuth from '../../src/components/custom-hooks/useAuth';
-import { auth } from '../firebase';
+
 import { toast } from 'react-toastify';
 
 const Header = () => {
-  const { currentUser } = useAuth();
-  console.log(currentUser);
+  
 
   const navigate = useNavigate();
   //переход на регистрацию
@@ -23,14 +21,14 @@ const Header = () => {
   //выход из профиля
   const handleLogout = async () => {
     try {
-      await auth.signOut();
+      localStorage.removeItem('accessToken')
       toast.success('Вы успешно вышли из аккаунта!');
       navigate('/');
     } catch (error) {
       toast.error('Ошибка при выходе из аккаунта.');
     }
   };
-
+  const accessToken = localStorage.getItem('accessToken')
   return (
     <div className="header">
       <div className="container">
@@ -57,7 +55,7 @@ const Header = () => {
           </div>
           <Search />
           <div className="header__profile">
-            {currentUser && (
+            {accessToken && (
               <motion.button
                 whileHover={{ scale: 1.2 }}
                 onClick={() => {
@@ -74,7 +72,7 @@ const Header = () => {
                 handleAvatarClick();
               }}
               className="header__avatar">
-              <img src={currentUser && currentUser.photoURL ? currentUser.photoURL : avatar} />
+              <img src={avatar} />
             </motion.button>
           </div>
         </div>
