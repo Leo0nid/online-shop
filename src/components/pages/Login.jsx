@@ -24,7 +24,6 @@ const Login = () => {
 
       const user = userCredential.user;
 
-      console.log(user);
       setLoading(false);
       toast.success('Успешная авторизация!');
       navigate('/');

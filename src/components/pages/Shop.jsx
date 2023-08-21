@@ -10,6 +10,8 @@ import axios from 'axios';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [oneProduct, setOneProduct] = useState(null);
   const searchValue = useSelector((state) => state.search.searchValue);
   const { currentUser } = useAuth();
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -20,18 +22,18 @@ const Shop = () => {
     axios.get('https://64e08b5750713530432c6be6.mockapi.io/products')
       .then(response => {
         setProducts(response.data);
-        console.log(setProducts);
       })
       .catch(error => {
         console.error('Error:', error);
       });
   }, []);
+
 //поиск
   useEffect(() => {
     const filtered = products.filter((product) => product.name.toLowerCase().includes(searchValue));
     setFilteredProducts(filtered);
-    console.log(filtered);
   }, [searchValue, products]);
+
 //добавить в корзину
   const addToCartButton = (product) => {
     dispatch(cartActions.addItemToCart(product));
@@ -43,9 +45,9 @@ const Shop = () => {
       existingItem.quantity++;
     } 
     localStorage.setItem("products", JSON.stringify(arr));
-    console.log(product);
     toast.success('Добавлено в корзину!');
   };
+
 //добавить в избранное
   const toggleFavorite = (product) => {
     setActiveHearts((prevActiveHearts) => ({
@@ -61,8 +63,18 @@ const Shop = () => {
       existingItem.quantity++;
     } 
     localStorage.setItem("favoritesProducts", JSON.stringify(arr));
-    console.log(product);
     toast.success('Добавлено в избранное!');
+  };
+
+  const openDetails = (id) => {
+    setShowDetails(true);
+    products.map((item) => {
+      if (item.id == id) {
+        setOneProduct(item);
+      }
+    });
+
+    window.scrollTo(1, 0);
   };
 
   return (
@@ -72,7 +84,11 @@ const Shop = () => {
           {(searchValue ? filteredProducts : products).map((product) => (
             <div key={product.id} className="shop__cart">
               <motion.button className="shop__image" whileHover={{ scale: 1.1 }}>
-                <img src={product.url} alt="" />
+                <img 
+                  src={product.url} 
+                  alt={product.name}
+                  onClick={() => openDetails(product.id)}
+                />
               </motion.button>
               <div className="shop__desc">
                 <p className="shop__text">{product.name}</p>
@@ -116,6 +132,29 @@ const Shop = () => {
           ))}
         </div>
       </div>
+       {/* modal-start---------- */}
+       {showDetails && (
+        <div className='blackdrop' onClick={() => setShowDetails(false)}>
+          <div className="modal">
+            <div className="modal-block">
+              <img src={oneProduct.url} alt="" />
+              <div className="modal__descr-block">
+                <h3>{oneProduct.name}</h3>
+                <span className="modal__article">
+                  Артикул: {oneProduct.article}
+                </span>
+                <span className="modal__price">Цена: {oneProduct.price} RU</span>
+                <span className="modal__descr">
+                  <span className="modal__descr-title">Описание: </span>
+                  {oneProduct.desc}
+                </span>
+              </div>
+              <button onClick={() => setShowDetails(false)}>X</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* modal-end---------- */}
     </div>
   );
 };

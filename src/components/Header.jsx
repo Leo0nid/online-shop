@@ -16,7 +16,6 @@ const Header = () => {
   const navigate = useNavigate();
   const [logOut, setLogOut] = useState(false);
 
-
   //показывает кнопку logOut
   const handleAvatarClick = (log) => {
     currentUser ? setLogOut(log) : navigate('/login');

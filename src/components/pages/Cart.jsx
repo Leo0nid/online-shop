@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
 import plus from "../assets/icons/plus.svg";
@@ -8,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.cartItems);
   const localStorageItems = JSON.parse(localStorage.getItem("products"));
   const [localData, setLocalData] = useState(null);
 
@@ -31,7 +29,7 @@ const Cart = () => {
     0
   );
 
-  //change quantity
+  //поменять количество
   const changeQuantity = (item, newQuantity) => {
     if (newQuantity >= 0) {
       dispatch(cartActions.changeItemQuantity({ id: item.id, quantity: newQuantity }));
