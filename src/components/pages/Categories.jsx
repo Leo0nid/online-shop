@@ -1,44 +1,21 @@
-import React, { Component } from 'react'
-import axios from 'axios';
+import React, { Component } from 'react';
+import '../scss/components/categories.scss';
 
 
-export class Categories extends Component {  
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      products: []
-    }
-  }
-
-  componentDidMount(){
-    axios.get('https://64e08b5750713530432c6be6.mockapi.io/products')
-      .then(response => {
-        this.setState({products: response.data})
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
-
+class Categories extends Component {
   render() {
-    let prods = [];
-    let prodList = this.state.products;
-    for (let i = 0; i < prodList.length; i++) {
-      console.log('scr/components/img/' + prodList[i].img);
-      prods.push(
-      <>
-        <p className='itemTitle'>{prodList[i].name}</p>
-        <p>{prodList[i].price}</p>
-      </>
-      );
-    }
-    
     return (
-      <div>
-        {prods}
+      <div className='categories'>
+        <button className='categories__btn'>Категория одежды</button>
+        <nav className='categories__nav'>
+          <ul className='categories__list'>
+            <button><li className='categories__item'>Все</li></button>
+            <li className='categories__item' >Мужская одежда</li>
+            <li className='categories__item'>Женская одежда</li>
+          </ul>
+        </nav>
       </div>
-    );
+    )
   }
 }
 

@@ -58,3 +58,75 @@
   }
   
 }
+
+.shop__button {
+  float: left;
+}
+
+.nav {
+  margin-top: 50px;
+  float: left;
+  background: white;
+  text-align: center;
+  margin-right: 10px;
+  }
+  .nav a {
+  text-decoration: none;
+  display: block;
+  transition: .5s linear;
+  }
+  .nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+  .topcategory > li {
+  display: block;
+  /*Если вместо block задать inline-block,
+  меню будет горизонтальным*/
+  position: relative;
+  width: 200px;
+  }
+  .topcategory > li > a {
+  font-weight: bold;
+  padding: 10px 30px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #1c1c1c;
+  border: 1px solid #999;
+  }
+  .subcategory {
+  position: absolute;
+  left: 200px;
+  z-index: 10;
+  width: 240px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: .5s ease-in-out;
+  }
+  .subcategory li {
+  position: relative;
+  border: 1px solid #999;
+  margin:2px;
+  top: -40px;
+  }
+  .subcategory a {
+  background: white;
+  color: #1c1c1c;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  }
+  .subcategory .subcategory {
+  position: absolute;
+  top: 0;
+  left: 200px;
+  }
+  .nav li:hover > .subcategory {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+  }

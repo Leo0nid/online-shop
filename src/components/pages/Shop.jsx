@@ -6,6 +6,10 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Categories from './Categories.jsx';
+
+
+
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -24,27 +28,27 @@ const Shop = () => {
         console.error('Error:', error);
       });
   }, []);
-//поиск
+  //поиск
   useEffect(() => {
     const filtered = products.filter((product) => product.name.toLowerCase().includes(searchValue));
     setFilteredProducts(filtered);
     console.log(filtered);
   }, [searchValue, products]);
-//добавить в корзину
+  //добавить в корзину
   const addToCartButton = (product) => {
     dispatch(cartActions.addItemToCart(product));
     let arr = JSON.parse(localStorage.getItem("products")) || [];
-    const existingItem = arr.find(item => item.id === product.id); 
+    const existingItem = arr.find(item => item.id === product.id);
     if (!existingItem) {
       arr.push({ ...product, quantity: 1 });
     } else {
       existingItem.quantity++;
-    } 
+    }
     localStorage.setItem("products", JSON.stringify(arr));
     console.log(product);
     toast.success('Добавлено в корзину!');
   };
-//добавить в избранное
+  //добавить в избранное
   const toggleFavorite = (product) => {
     setActiveHearts((prevActiveHearts) => ({
       ...prevActiveHearts,
@@ -52,63 +56,90 @@ const Shop = () => {
     }));
     dispatch(favoritesActions.addItemToFavorites(product));
     let arr = JSON.parse(localStorage.getItem("favoritesProducts")) || [];
-    const existingItem = arr.find(item => item.id === product.id); 
+    const existingItem = arr.find(item => item.id === product.id);
     if (!existingItem) {
       arr.push({ ...product, quantity: 1 });
     } else {
       existingItem.quantity++;
-    } 
+    }
     localStorage.setItem("favoritesProducts", JSON.stringify(arr));
     console.log(product);
     toast.success('Добавлено в избранное!');
   };
 
+
   return (
-    <div className="shop">
-      <div className="container">
-        <div className="shop__wrapper">
-          {(searchValue ? filteredProducts : products).map((product) => (
-            <div key={product.id} className="shop__cart">
-              <motion.button className="shop__image" whileHover={{ scale: 1.1 }}>
-                <img src={product.url} alt="" />
-              </motion.button>
-              <div className="shop__desc">
-                <p className="shop__text">{product.name}</p>
-                <p className="shop__text">{product.price} RU</p>
-                <p className="shop__text">Артикул {product.article} </p>
-              </div>
-              <div className="shop__button">
-                <motion.button
-                  onClick={() => addToCartButton(product)}
-                  className="shop__button-cart"
-                  whileHover={{ scale: 1.1 }}>
-                  В корзину
+    <>
+      <div class="nav">
+        <ul class="topcategory">
+          <li><a href="">Футболки</a>
+            <ul class="subcategory">
+              <li><a href="">Кофты</a></li>
+            </ul>
+          </li>
+          <li><a href="">Рубашки</a>
+          </li>
+          <li><a href="">Свитшоты</a>
+            <ul class="subcategory">
+              <li><a href="">Худи</a></li>
+            </ul>
+          </li>
+          <li><a href="">Брюки</a>
+            <ul class="subcategory">
+              <li><a href="">Штаны</a></li>
+            </ul>
+          </li>
+          <li><a href="">Бомбер</a></li>
+        </ul>
+      </div>
+
+
+      <div className="shop">
+        <div className="container">
+          <div className="shop__wrapper">
+            {(searchValue ? filteredProducts : products).map((product) => (
+              <div key={product.id} className="shop__cart">
+                <motion.button className="shop__image" whileHover={{ scale: 1.1 }}>
+                  <img src={product.url} alt="" />
                 </motion.button>
-                <motion.button whileHover={{ scale: 1.1 }}> 
-                  <svg
-                    onClick={() => toggleFavorite(product)}
-                    className={`shop__heart ${activeHearts[product.id] ? 'active' : ''}`}
-                    height="512px"
-                    id="Layer_1"
-                    style={{ enableBackground: 'new 0 0 512 512' }}
-                    version="1.1"
-                    viewBox="0 0 512 512"
-                    width="512px"
-                    xmlSpace="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink">
-                    <path
-                      d="M340.8,83C307,83,276,98.8,256,124.8c-20-26-51-41.8-84.8-41.8C112.1,83,64,131.3,64,190.7c0,27.9,10.6,54.4,29.9,74.6L245.1,418l10.9,11l10.9-11l148.3-149.8c21-20.3,32.8-47.9,32.8-77.5C448,131.3,399.9,83,340.8,83L340.8,83z"
-                      fill="#000000"
-                    />
-                  </svg>
-                </motion.button>
+                <div className="shop__desc">
+                  <p className="shop__text">{product.name}</p>
+                  <p className="shop__text">{product.price} RU</p>
+                  <p className="shop__text">Артикул {product.article} </p>
+                </div>
+                <div className="shop__button">
+                  <motion.button
+                    onClick={() => addToCartButton(product)}
+                    className="shop__button-cart"
+                    whileHover={{ scale: 1.1 }}>
+                    В корзину
+                  </motion.button>
+                  <motion.button whileHover={{ scale: 1.1 }}>
+                    <svg
+                      onClick={() => toggleFavorite(product)}
+                      className={`shop__heart ${activeHearts[product.id] ? 'active' : ''}`}
+                      height="512px"
+                      id="Layer_1"
+                      style={{ enableBackground: 'new 0 0 512 512' }}
+                      version="1.1"
+                      viewBox="0 0 512 512"
+                      width="512px"
+                      xmlSpace="preserve"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlnsXlink="http://www.w3.org/1999/xlink">
+                      <path
+                        d="M340.8,83C307,83,276,98.8,256,124.8c-20-26-51-41.8-84.8-41.8C112.1,83,64,131.3,64,190.7c0,27.9,10.6,54.4,29.9,74.6L245.1,418l10.9,11l10.9-11l148.3-149.8c21-20.3,32.8-47.9,32.8-77.5C448,131.3,399.9,83,340.8,83L340.8,83z"
+                        fill="#000000"
+                      />
+                    </svg>
+                  </motion.button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

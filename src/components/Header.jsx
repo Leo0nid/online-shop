@@ -47,9 +47,9 @@ const Header = () => {
               <li>
                 <Link to="/">Магазин</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/categories">Категория</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/favorites">Избранное</Link>
               </li>
