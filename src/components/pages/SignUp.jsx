@@ -3,67 +3,41 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-
-//firebase
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { auth } from '../../firebase.js';
-import { storage } from '../../firebase.js';
-import { setDoc, doc } from 'firebase/firestore';
-import { db } from '../../firebase.js';
-
-import { toast } from 'react-toastify';
-
+import axios from 'axios';
+import {toast} from 'react-toastify'
 const SignUp = () => {
   const [userName, setuserName] = useState('');
-  const [file, setFile] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const signup = async (e) => {
-    e.preventDefault();
+
+  const formValueSignUp = {
+    email: email,
+    full_name: userName,
+    password: password,
+  }
+
+  const signUp = async (e) => {
+    e.preventDefault(); 
     setLoading(true);
-  
     try {
-      // Регистрация пользователя
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      const profileUpdates = {
-        uid: user.uid,
-        displayName: userName,
-        email: email,
-      };
-
-      if (file) {
-        // Загрузка файла
-        const storageRef = ref(storage, `images/${Date.now() + userName}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-        await uploadTask;
-
-        // Получение картинки (url) загруженного файла
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-        profileUpdates.photoURL = downloadURL;
-      }
-
-      // Обновление профиля пользователя
-      await updateProfile(user, profileUpdates);
-
-      // Добавление записи в базу данных
-      await setDoc(doc(db, 'users', user.uid), profileUpdates);
-
+      const response = await axios.post('http://164.92.99.90:8000/api-account/register/', formValueSignUp);
       setLoading(false);
       toast.success('Аккаунт создан!');
-      navigate('/');
+      navigate('/login');
+      console.log(response.data);
+    
     } catch (error) {
+      console.error('Ошибка запроса:', error);
       setLoading(false);
       toast.error('Ошибка!');
+  
     }
-  };
+  }
+  
   return (
     <>
       <div className="login">
@@ -74,7 +48,7 @@ const SignUp = () => {
             <div className="login__wrapper">
               <h3 className="login__name">Регистрация</h3>
               <Formik>
-                <Form className="login__form-auth" onSubmit={signup}>
+                <Form className="login__form-auth" onSubmit={signUp}>
                   <input
                     type="text"
                     placeholder="Имя пользователя"
@@ -93,8 +67,8 @@ const SignUp = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-
+                   
+  
                   <button type="submit" className="login__btn">
                     Зарегистрироваться
                   </button>
