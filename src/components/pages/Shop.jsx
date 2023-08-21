@@ -15,7 +15,7 @@ const Shop = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('https://64e08b5750713530432c6be6.mockapi.io/products')
+    axios.get('http://164.92.99.90:8000/api-product/product/list/')
       .then(response => {
         setProducts(response.data);
         console.log(setProducts);
@@ -75,7 +75,6 @@ const Shop = () => {
               <div className="shop__desc">
                 <p className="shop__text">{product.name}</p>
                 <p className="shop__text">{product.price} RU</p>
-                <p className="shop__text">Артикул {product.article} </p>
               </div>
               <div className="shop__button">
                 <motion.button
