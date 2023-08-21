@@ -7,7 +7,6 @@ import store from './redux/store';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Categories from './components/pages/Categories';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
