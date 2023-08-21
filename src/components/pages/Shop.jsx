@@ -70,6 +70,8 @@ const Shop = () => {
         setOneProduct(item);
       }
     });
+
+    window.scrollTo(1, 0);
   };
 
   return (
