@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Search from '../components/Search';
 import logo from './assets/icons/shop.png';
@@ -13,13 +13,15 @@ import { toast } from 'react-toastify';
 
 const Header = () => {
   const { currentUser } = useAuth();
-  console.log(currentUser);
-
   const navigate = useNavigate();
-  //переход на регистрацию
-  const handleAvatarClick = () => {
-    navigate('/login');
+  const [logOut, setLogOut] = useState(false);
+
+
+  //показывает кнопку logOut
+  const handleAvatarClick = (log) => {
+    currentUser ? setLogOut(log) : navigate('/login');
   };
+
   //выход из профиля
   const handleLogout = async () => {
     try {
@@ -47,31 +49,44 @@ const Header = () => {
               <li>
                 <Link to="/">Магазин</Link>
               </li>
-              <li>
-                <Link to="/favorites">Избранное</Link>
-              </li>
-              <li>
-                <Link to="/cart">Корзина</Link>
-              </li>
+              {currentUser 
+              ?  <>
+                  <li>
+                    <Link to="/favorites">Избранное</Link>
+                  </li>
+                  <li>
+                    <Link to="/cart">Корзина</Link>
+                  </li>
+                </>
+              : null
+              }
+             
             </div>
           </div>
           <Search />
           <div className="header__profile">
             {currentUser && (
-              <motion.button
-                whileHover={{ scale: 1.2 }}
-                onClick={() => {
-                  handleLogout();
-                }}
-                className="header__logout">
-                <img src={logout} alt="logout" />
-              </motion.button>
+              <>  
+                {logOut 
+                  ?          
+                  <motion.button
+                    whileHover={{ scale: 1.2 }}
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                    className="header__logout">
+                    <img src={logout} alt="logout" />
+                  </motion.button>
+                    
+                  : null
+                }  
+              </>
             )}
 
             <motion.button
               whileHover={{ scale: 1.2 }}
               onClick={() => {
-                handleAvatarClick();
+                handleAvatarClick(!logOut);
               }}
               className="header__avatar">
               <img src={currentUser && currentUser.photoURL ? currentUser.photoURL : avatar} />
