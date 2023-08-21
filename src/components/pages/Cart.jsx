@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const localStorageItems = JSON.parse(localStorage.getItem("products"))
 
   //удалить товар
   const cartItemDelete = (product) => {
@@ -18,17 +19,24 @@ const Cart = () => {
     localStorage.setItem('products' , JSON.stringify(updateLocalStorageCart))
   };
   //сумма товаров в корзине
-  const totalAmount = cartItems.reduce(
+  const totalAmount = localStorageItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
   //change quantity
   const changeQuantity = (item, newQuantity) => {
-    dispatch(
-      cartActions.changeItemQuantity({ ...item, quantity: newQuantity })
-    );
+    if (newQuantity >= 0) {
+      dispatch(cartActions.changeItemQuantity({ id: item.id, quantity: newQuantity }));
+      
+      const updatedLocalStorageItems = localStorageItems.map(localStorageItem =>
+        localStorageItem.id === item.id ? { ...localStorageItem, quantity: newQuantity } : localStorageItem
+      );
+        // console.log(updatedLocalStorageItems);
+      localStorage.setItem("products", JSON.stringify(updatedLocalStorageItems));
+    }
   };
-  const localStorageItems = JSON.parse(localStorage.getItem("products"))
+  console.log(changeQuantity());
+  
   console.log(localStorageItems);
   return (
     <div className="cart">
