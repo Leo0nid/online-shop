@@ -9,11 +9,14 @@ import axios from 'axios';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [oneProduct, setOneProduct] = useState(null);
   const searchValue = useSelector((state) => state.search.searchValue);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
 
+  console.log(products);
   useEffect(() => {
     axios.get('https://64e08b5750713530432c6be6.mockapi.io/products')
       .then(response => {
@@ -29,6 +32,7 @@ const Shop = () => {
     const filtered = products.filter((product) => product.name.toLowerCase().includes(searchValue));
     setFilteredProducts(filtered);
     console.log(filtered);
+    console.log(545455);
   }, [searchValue, products]);
 //добавить в корзину
   const addToCartButton = (product) => {
@@ -42,7 +46,7 @@ const Shop = () => {
     } 
     localStorage.setItem("products", JSON.stringify(arr));
     console.log(product);
-    toast.success('Добавлено в корзину!');
+    toast.success("Добавлено в корзину!");
   };
 //добавить в избранное
   const toggleFavorite = (product) => {
@@ -60,7 +64,18 @@ const Shop = () => {
     } 
     localStorage.setItem("favoritesProducts", JSON.stringify(arr));
     console.log(product);
-    toast.success('Добавлено в избранное!');
+    toast.success("Добавлено в избранное!");
+  };
+
+  const openDetails = (id) => {
+    setShowDetails(true);
+    products.map((item) => {
+      if (item.id == id) {
+        setOneProduct(item);
+      }
+    });
+
+    window.scrollTo(1, 0);
   };
 
   return (
@@ -69,8 +84,17 @@ const Shop = () => {
         <div className="shop__wrapper">
           {(searchValue ? filteredProducts : products).map((product) => (
             <div key={product.id} className="shop__cart">
-              <motion.button className="shop__image" whileHover={{ scale: 1.1 }}>
-                <img src={product.url} alt="" />
+              <motion.button
+                className="shop__image"
+                whileHover={{ scale: 1.1 }}
+              >
+                <img
+                  src={product.url}
+                  alt=""
+                  onClick={() => {
+                    openDetails(product.id);
+                  }}
+                />
               </motion.button>
               <div className="shop__desc">
                 <p className="shop__text">{product.name}</p>
@@ -81,22 +105,26 @@ const Shop = () => {
                 <motion.button
                   onClick={() => addToCartButton(product)}
                   className="shop__button-cart"
-                  whileHover={{ scale: 1.1 }}>
+                  whileHover={{ scale: 1.1 }}
+                >
                   В корзину
                 </motion.button>
-                <motion.button whileHover={{ scale: 1.1 }}> 
+                <motion.button whileHover={{ scale: 1.1 }}>
                   <svg
                     onClick={() => toggleFavorite(product)}
-                    className={`shop__heart ${activeHearts[product.id] ? 'active' : ''}`}
+                    className={`shop__heart ${
+                      activeHearts[product.id] ? "active" : ""
+                    }`}
                     height="512px"
                     id="Layer_1"
-                    style={{ enableBackground: 'new 0 0 512 512' }}
+                    style={{ enableBackground: "new 0 0 512 512" }}
                     version="1.1"
                     viewBox="0 0 512 512"
                     width="512px"
                     xmlSpace="preserve"
                     xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink">
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                  >
                     <path
                       d="M340.8,83C307,83,276,98.8,256,124.8c-20-26-51-41.8-84.8-41.8C112.1,83,64,131.3,64,190.7c0,27.9,10.6,54.4,29.9,74.6L245.1,418l10.9,11l10.9-11l148.3-149.8c21-20.3,32.8-47.9,32.8-77.5C448,131.3,399.9,83,340.8,83L340.8,83z"
                       fill="#000000"
@@ -108,6 +136,27 @@ const Shop = () => {
           ))}
         </div>
       </div>
+      {/* modal-start---------- */}
+      {showDetails && (
+        <div className="modal">
+          <div className="modal-block">
+            <img src={oneProduct.url} alt="" />
+            <div className="modal__descr-block">
+              <h3>{oneProduct.name}</h3>
+              <span className="modal__article">
+                Артикул: {oneProduct.article}
+              </span>
+              <span className="modal__price">Цена: {oneProduct.price} RU</span>
+              <span className="modal__descr">
+                <span className="modal__descr-title">Описание: </span>
+                {oneProduct.desc}
+              </span>
+            </div>
+            <button onClick={() => setShowDetails(false)}>X</button>
+          </div>
+        </div>
+      )}
+      {/* modal-end---------- */}
     </div>
   );
 };
