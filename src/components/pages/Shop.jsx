@@ -32,10 +32,9 @@ const Shop = () => {
 
   //поиск
   useEffect(() => {
-    console.log('hoho');
     let filtered = products.filter((product) => product.name.toLowerCase().includes(searchValue.toLowerCase()));
     if (categoryValue !== 'all') {
-        filtered = filtered.filter((product) => product.name.toLowerCase().includes(categoryValue.toLowerCase()));
+      filtered = filtered.filter((product) => product.name.toLowerCase().includes(categoryValue.toLowerCase()));
     }
     setFilteredProducts(filtered);
     console.log(filtered);
@@ -91,47 +90,58 @@ const Shop = () => {
     <>
       <div class="nav">
         <ul class="topcategory">
-        <li><a
+          <li><a
+            className={categoryValue === 'all' ? 'activeCategory' : 'nonActive'}
             onClick={() => {
-              console.log('tochno');
               dispatch(categoryActions.setCategoryValue('all'));
             }}
           >ВСЕ</a>
           </li>
           <li><a
+            className={categoryValue === 'Футболка' ? 'activeCategory' : 'nonActive'}
             onClick={() => {
-              console.log('tochno');
               dispatch(categoryActions.setCategoryValue('Футболка'));
             }}
           >Футболки</a>
           </li>
           <li><a
-           onClick={() => {
-            dispatch(categoryActions.setCategoryValue('Рубашка'));
-          }}
+            className={categoryValue === 'Рубашка' ? 'activeCategory' : 'nonActive'}
+            onClick={() => {
+              dispatch(categoryActions.setCategoryValue('Рубашка'));
+            }}
           >Рубашки</a>
           </li>
-          <li><a  onClick={() => {
-                dispatch(categoryActions.setCategoryValue('Свитшот'));
-              }}>Свитшоты</a>
+          <li><a 
+          className={categoryValue === 'Свитшот' ? 'activeCategory' : 'nonActive'}
+          onClick={() => {
+            dispatch(categoryActions.setCategoryValue('Свитшот'));
+          }}>Свитшоты</a>
             <ul class="subcategory">
-              <li><a  onClick={() => {
+              <li><a 
+              className={categoryValue === 'Худи' ? 'activeCategory' : 'nonActive'}
+              onClick={() => {
                 dispatch(categoryActions.setCategoryValue('Худи'));
               }}>Худи</a></li>
             </ul>
           </li>
-          <li><a  onClick={() => {
-                dispatch(categoryActions.setCategoryValue('Брюки'));
-              }}>Брюки</a>
+          <li><a 
+          className={categoryValue === 'Брюки' ? 'activeCategory' : 'nonActive'}
+          onClick={() => {
+            dispatch(categoryActions.setCategoryValue('Брюки'));
+          }}>Брюки</a>
             <ul class="subcategory">
-              <li><a  onClick={() => {
+              <li><a 
+              className={categoryValue === 'Штаны' ? 'activeCategory' : 'nonActive'}
+              onClick={() => {
                 dispatch(categoryActions.setCategoryValue('Штаны'));
               }}>Штаны</a></li>
             </ul>
           </li>
-          <li><a  onClick={() => {
-                dispatch(categoryActions.setCategoryValue('Бомбер'));
-              }}>Бомбер</a></li>
+          <li><a 
+          className={categoryValue === 'Бомбер' ? 'activeCategory' : 'nonActive'}
+          onClick={() => {
+            dispatch(categoryActions.setCategoryValue('Бомбер'));
+          }}>Бомбер</a></li>
         </ul>
       </div>
 
