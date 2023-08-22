@@ -45,6 +45,9 @@ const Header = () => {
               <li>
                 <Link to="/">Магазин</Link>
               </li>
+              {/* <li>
+                <Link to="/categories">Категория</Link>
+              </li> */}
               <li>
                 <Link to="/favorites">Избранное</Link>
               </li>
@@ -53,6 +56,28 @@ const Header = () => {
               </li>
             </div>
           </div>
+
+          <div className="hamburger-menu">
+            <input id="menu__toggle" type="checkbox" />
+            <label className="menu__btn" for="menu__toggle">
+              <span></span>
+            </label>            
+            <ul className="menu__box">
+              <li>
+                <Link to="/#" className="menu__item">Магазин</Link>
+              </li>
+              <li>
+                <Link to="/categories#" className="menu__item">Категория</Link>
+              </li>
+              <li>
+                <Link to="/favorites#" className="menu__item">Избранное</Link>
+              </li>
+              <li>
+                <Link to="/cart#" className="menu__item">Корзина</Link>
+              </li>
+            </ul>
+          </div>
+
           <Search />
           <div className="header__profile">
             {accessToken && (
