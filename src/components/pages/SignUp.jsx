@@ -28,7 +28,6 @@ const SignUp = () => {
       setLoading(false);
       toast.success('Аккаунт создан!');
       navigate('/login');
-      console.log(response.data);
     
     } catch (error) {
       console.error('Ошибка запроса:', error);

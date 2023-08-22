@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Header = () => {
-  
 
   const navigate = useNavigate();
   //переход на регистрацию
