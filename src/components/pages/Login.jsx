@@ -2,10 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-
-//firebase
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import axios from 'axios';
 
 import { toast } from 'react-toastify';
 
@@ -19,19 +16,33 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
+    const formValueLogin = {
+      email: email,
+      password: password,
+    };
     try {
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       const user = userCredential.user;
 
+
+      const response = await axios.post(
+        'http://164.92.99.90:8000/api-account/token/',
+        formValueLogin,
+      );
+
       setLoading(false);
+      localStorage.setItem('accessToken', response.data.token);
       toast.success('Успешная авторизация!');
       navigate('/');
+      console.log(response.data);
     } catch (error) {
       setLoading(false);
-      toast.error(error.message);
+      toast.error('Ошибка!');
     }
   };
+  
   return (
     <>
       <div className="login">

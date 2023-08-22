@@ -18,8 +18,9 @@ const Shop = () => {
   const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
 
+  console.log(products);
   useEffect(() => {
-    axios.get('https://64e08b5750713530432c6be6.mockapi.io/products')
+    axios.get('http://164.92.99.90:8000/api-product/product/list/')
       .then(response => {
         setProducts(response.data);
       })
@@ -63,7 +64,20 @@ const Shop = () => {
       existingItem.quantity++;
     } 
     localStorage.setItem("favoritesProducts", JSON.stringify(arr));
+
     toast.success('Добавлено в избранное!');
+    toast.success("Добавлено в избранное!");
+  };
+
+  const openDetails = (id) => {
+    setShowDetails(true);
+    products.map((item) => {
+      if (item.id == id) {
+        setOneProduct(item);
+      }
+    });
+
+    window.scrollTo(1, 0);
   };
 
   const openDetails = (id) => {
@@ -83,6 +97,7 @@ const Shop = () => {
         <div className="shop__wrapper">
           {(searchValue ? filteredProducts : products).map((product) => (
             <div key={product.id} className="shop__cart">
+
               <motion.button className="shop__image" whileHover={{ scale: 1.1 }}>
                 <img 
                   src={product.url} 
@@ -93,7 +108,6 @@ const Shop = () => {
               <div className="shop__desc">
                 <p className="shop__text">{product.name}</p>
                 <p className="shop__text">{product.price} RU</p>
-                <p className="shop__text">Артикул {product.article} </p>
               </div>
               <div className="shop__button">
                 {currentUser 

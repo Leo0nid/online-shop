@@ -49,14 +49,11 @@
   width: 35px;
   height: 35px;
   margin: 0 0 5px 10px;
- 
-  
 }
 .active {
-  & path{
+  & path {
     fill: rgb(218, 218, 218);
   }
-  
 }
 
 .modal {
@@ -69,6 +66,7 @@
   padding: 2%;
   box-shadow: 0 0 8px #e0e0e0;
 }
+
 
 .blackdrop {
   width: 100%;
@@ -163,3 +161,4 @@
     width: 100%;
   }
 }
+
