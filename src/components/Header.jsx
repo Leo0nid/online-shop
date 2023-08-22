@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useAuth from '../../src/components/custom-hooks/useAuth';
 import { Link } from 'react-router-dom';
 import Search from '../components/Search';
 import logo from './assets/icons/shop.png';
@@ -7,18 +8,12 @@ import logout from '../components/assets/icons/logout.png';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-
 import { toast } from 'react-toastify';
 
 const Header = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [logOut, setLogOut] = useState(false);
-
-  //показывает кнопку logOut
-  const handleAvatarClick = (log) => {
-    currentUser ? setLogOut(log) : navigate('/login');
-  };
 
   //выход из профиля
   const handleLogout = async () => {
@@ -30,7 +25,12 @@ const Header = () => {
       toast.error('Ошибка при выходе из аккаунта.');
     }
   };
-  const accessToken = localStorage.getItem('accessToken')
+  const accessToken = localStorage.getItem('accessToken');
+
+    //показывает кнопку logOut
+    const handleAvatarClick = (log) => {
+      accessToken ? setLogOut(log) : navigate('/login');
+    };
   return (
     <div className="header">
       <div className="container">

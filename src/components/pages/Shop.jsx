@@ -18,7 +18,6 @@ const Shop = () => {
   const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
 
-  console.log(products);
   useEffect(() => {
     axios.get('http://164.92.99.90:8000/api-product/product/list/')
       .then(response => {
@@ -67,17 +66,6 @@ const Shop = () => {
 
     toast.success('Добавлено в избранное!');
     toast.success("Добавлено в избранное!");
-  };
-
-  const openDetails = (id) => {
-    setShowDetails(true);
-    products.map((item) => {
-      if (item.id == id) {
-        setOneProduct(item);
-      }
-    });
-
-    window.scrollTo(1, 0);
   };
 
   const openDetails = (id) => {
