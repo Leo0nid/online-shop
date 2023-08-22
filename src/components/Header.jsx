@@ -15,11 +15,6 @@ const Header = () => {
   const navigate = useNavigate();
   const [logOut, setLogOut] = useState(false);
 
-  //показывает кнопку logOut
-  const handleAvatarClick = (log) => {
-    currentUser ? setLogOut(log) : navigate('/login');
-  };
-
   //выход из профиля
   const handleLogout = async () => {
     try {
@@ -30,7 +25,12 @@ const Header = () => {
       toast.error('Ошибка при выходе из аккаунта.');
     }
   };
-  const accessToken = localStorage.getItem('accessToken')
+  const accessToken = localStorage.getItem('accessToken');
+
+    //показывает кнопку logOut
+    const handleAvatarClick = (log) => {
+      accessToken ? setLogOut(log) : navigate('/login');
+    };
   return (
     <div className="header">
       <div className="container">
