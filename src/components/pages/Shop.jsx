@@ -18,7 +18,6 @@ const Shop = () => {
   const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
 
-  console.log(products);
   useEffect(() => {
     axios.get('http://164.92.99.90:8000/api-product/product/list/')
       .then(response => {
