@@ -22,9 +22,6 @@ const Login = () => {
     };
     try {
 
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      const user = userCredential.user;
 
 
       const response = await axios.post(

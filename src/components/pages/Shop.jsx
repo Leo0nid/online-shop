@@ -13,7 +13,6 @@ const Shop = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [oneProduct, setOneProduct] = useState(null);
   const searchValue = useSelector((state) => state.search.searchValue);
-  const { currentUser } = useAuth();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
@@ -80,16 +79,6 @@ const Shop = () => {
     window.scrollTo(1, 0);
   };
 
-  const openDetails = (id) => {
-    setShowDetails(true);
-    products.map((item) => {
-      if (item.id == id) {
-        setOneProduct(item);
-      }
-    });
-
-    window.scrollTo(1, 0);
-  };
 
   return (
     <div className="shop">
@@ -110,8 +99,7 @@ const Shop = () => {
                 <p className="shop__text">{product.price} RU</p>
               </div>
               <div className="shop__button">
-                {currentUser 
-                  ? <>
+                <>
                       <motion.button
                         onClick={() => addToCartButton(product)}
                         className="shop__button-cart"
@@ -139,8 +127,7 @@ const Shop = () => {
                         </svg>
                       </motion.button>
                     </>
-                  : null
-                }
+                 
               </div>
             </div>
           ))}

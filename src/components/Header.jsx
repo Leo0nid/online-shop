@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Search from '../components/Search';
 import logo from './assets/icons/shop.png';
@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Header = () => {
-  const { currentUser } = useAuth();
+ 
   const navigate = useNavigate();
-  const [logOut, setLogOut] = useState(false);
+
 
   //показывает кнопку logOut
-  const handleAvatarClick = (log) => {
-    currentUser ? setLogOut(log) : navigate('/login');
+  const handleAvatarClick = () => {
+    navigate('/login');
   };
 
   //выход из профиля
@@ -47,8 +47,7 @@ const Header = () => {
               <li>
                 <Link to="/">Магазин</Link>
               </li>
-              {currentUser 
-              ?  <>
+                <>
                   <li>
                     <Link to="/favorites">Избранное</Link>
                   </li>
@@ -56,8 +55,7 @@ const Header = () => {
                     <Link to="/cart">Корзина</Link>
                   </li>
                 </>
-              : null
-              }
+            
              
             </div>
           </div>
@@ -65,8 +63,7 @@ const Header = () => {
           <div className="header__profile">
             {accessToken && (
              <>  
-                {logOut 
-                  ?          
+                         
                   <motion.button
                     whileHover={{ scale: 1.2 }}
                     onClick={() => {
@@ -76,15 +73,14 @@ const Header = () => {
                     <img src={logout} alt="logout" />
                   </motion.button>
                     
-                  : null
-                }  
+              
               </>
             )}
 
             <motion.button
               whileHover={{ scale: 1.2 }}
               onClick={() => {
-                handleAvatarClick(!logOut);
+                handleAvatarClick();
               }}
               className="header__avatar">
               <img src={avatar} />
