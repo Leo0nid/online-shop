@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useAuth from '../../src/components/custom-hooks/useAuth';
 import { Link } from 'react-router-dom';
 import Search from '../components/Search';
 import logo from './assets/icons/shop.png';
@@ -6,7 +7,6 @@ import avatar from '../components/assets/icons/avatar.png';
 import logout from '../components/assets/icons/logout.png';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-
 
 import { toast } from 'react-toastify';
 

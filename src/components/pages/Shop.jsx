@@ -80,17 +80,6 @@ const Shop = () => {
     window.scrollTo(1, 0);
   };
 
-  const openDetails = (id) => {
-    setShowDetails(true);
-    products.map((item) => {
-      if (item.id == id) {
-        setOneProduct(item);
-      }
-    });
-
-    window.scrollTo(1, 0);
-  };
-
   return (
     <div className="shop">
       <div className="container">

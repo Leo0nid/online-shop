@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
-
+//firebase
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 
 const Login = () => {
