@@ -21,6 +21,7 @@ const Cart = () => {
     const localStorageCart = JSON.parse(localStorage.getItem("products")) || [];
     const updateLocalStorageCart = localStorageCart.filter((item) => item.id !== product.id);
     localStorage.setItem('products' , JSON.stringify(updateLocalStorageCart));
+    setLocalData(JSON.parse(localStorage.getItem("products")));
   };
 
   //сумма товаров в корзине
