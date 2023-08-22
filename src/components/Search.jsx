@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector,useDispatch} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux';
 import { setSearchValue, clearSearchValue } from '../../src/redux/slices/searchSlice';
 
 const Search = () => {

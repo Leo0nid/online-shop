@@ -21,10 +21,17 @@ const Login = () => {
       password: password,
     };
     try {
+
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      const user = userCredential.user;
+
+
       const response = await axios.post(
         'http://164.92.99.90:8000/api-account/token/',
         formValueLogin,
       );
+
       setLoading(false);
       localStorage.setItem('accessToken', response.data.token);
       toast.success('Успешная авторизация!');

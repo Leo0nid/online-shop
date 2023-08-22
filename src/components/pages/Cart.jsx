@@ -1,5 +1,4 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
 import plus from "../assets/icons/plus.svg";
@@ -8,28 +7,42 @@ import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const localStorageItems = JSON.parse(localStorage.getItem("products"));
+  const [localData, setLocalData] = useState(null);
+
+  useEffect(() => {
+    const response = JSON.parse(localStorage.getItem("products"));
+    setLocalData(response);
+  }, [localStorage]);
 
   //удалить товар
   const cartItemDelete = (product) => {
     dispatch(cartActions.removeItemFromCart(product));
-    const localStorageCart = JSON.parse(localStorage.getItem("products")) || []
-    const updateLocalStorageCart = localStorageCart.filter((item) => item.id !== product.id)
-    localStorage.setItem('products' , JSON.stringify(updateLocalStorageCart))
+    const localStorageCart = JSON.parse(localStorage.getItem("products")) || [];
+    const updateLocalStorageCart = localStorageCart.filter((item) => item.id !== product.id);
+    localStorage.setItem('products' , JSON.stringify(updateLocalStorageCart));
   };
+
   //сумма товаров в корзине
-  const totalAmount = cartItems.reduce(
+  const totalAmount = localStorageItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  //change quantity
+
+  //поменять количество
   const changeQuantity = (item, newQuantity) => {
-    dispatch(
-      cartActions.changeItemQuantity({ ...item, quantity: newQuantity })
-    );
+    if (newQuantity >= 0) {
+      dispatch(cartActions.changeItemQuantity({ id: item.id, quantity: newQuantity }));
+      
+      const updatedLocalStorageItems = localStorageItems.map(localStorageItem =>
+        localStorageItem.id === item.id ? { ...localStorageItem, quantity: newQuantity } : localStorageItem
+      );
+
+      localStorage.setItem("products", JSON.stringify(updatedLocalStorageItems));
+      setLocalData(JSON.parse(localStorage.getItem("products")));
+    }
   };
-  const localStorageItems = JSON.parse(localStorage.getItem("products"))
-  console.log(localStorageItems);
+
   return (
     <div className="cart">
       <div className="container">
@@ -52,16 +65,20 @@ const Cart = () => {
                       </p>
                     </div>
                     <div className="quantity">
-                      <img
+                      <button
+                        disabled={item.quantity <= 1}     
                         className="cart_quantity"
-                        onClick={() => changeQuantity(item, item.quantity - 1)}
+                        onClick={() => changeQuantity(item, item.quantity = item.quantity - 1)}
+                      >
+                      <img
                         src={minus}
                         alt="minus icon"
                       />
+                      </button>
                       <h3 className="cart__count">{item.quantity}шт.</h3>
                       <img
                         className="cart_quantity"
-                        onClick={() => changeQuantity(item, item.quantity + 1)}
+                        onClick={() => changeQuantity(item, item.quantity = item.quantity + 1)}
                         src={plus}
                         alt="plus icon"
                       />

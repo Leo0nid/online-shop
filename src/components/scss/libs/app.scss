@@ -20,3 +20,12 @@ body {
     max-width: $container;
     padding: 0 40px;
 }
+
+
+@media (max-width:775px) {
+  .container {
+    margin: 0 auto;
+    max-width: $container;
+    padding: 0;
+}
+}

@@ -26,13 +26,13 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter((item) => item.id !== itemToRemove.id);
     },
 
-    changeItemQuantity: (state, action) => {
+    changeItemQuantity(state, action) {
       const { id, quantity } = action.payload;
-      const itemToChange = state.cartItems.find((item) => item.id === id);
-      if(itemToChange){
-        itemToChange.quantity = Math.max(1, quantity);
+      const itemToUpdate = state.cartItems.find(item => item.id === id);
+      if (itemToUpdate) {
+        itemToUpdate.quantity = quantity;
       }
-    }
+    },
   },
 });
 
