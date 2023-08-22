@@ -29,7 +29,6 @@ const Login = () => {
       localStorage.setItem('accessToken', response.data.token);
       toast.success('Успешная авторизация!');
       navigate('/');
-      console.log(response.data);
     } catch (error) {
       setLoading(false);
       toast.error('Ошибка!');

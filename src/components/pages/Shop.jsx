@@ -16,23 +16,18 @@ const Shop = () => {
   const [activeHearts, setActiveHearts] = useState({});
   const dispatch = useDispatch();
 
-  console.log(products);
   useEffect(() => {
     axios.get('http://164.92.99.90:8000/api-product/product/list/')
       .then(response => {
         setProducts(response.data);
-        console.log(setProducts);
       })
       .catch(error => {
-        console.error('Error:', error);
       });
   }, []);
 //поиск
   useEffect(() => {
     const filtered = products.filter((product) => product.name.toLowerCase().includes(searchValue));
     setFilteredProducts(filtered);
-    console.log(filtered);
-    console.log(545455);
   }, [searchValue, products]);
 //добавить в корзину
   const addToCartButton = (product) => {
@@ -45,7 +40,6 @@ const Shop = () => {
       existingItem.quantity++;
     } 
     localStorage.setItem("products", JSON.stringify(arr));
-    console.log(product);
     toast.success("Добавлено в корзину!");
   };
 //добавить в избранное
@@ -63,7 +57,6 @@ const Shop = () => {
       existingItem.quantity++;
     } 
     localStorage.setItem("favoritesProducts", JSON.stringify(arr));
-    console.log(product);
     toast.success("Добавлено в избранное!");
   };
 

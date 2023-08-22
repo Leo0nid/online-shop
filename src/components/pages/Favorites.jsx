@@ -7,7 +7,6 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const favoritesItems = useSelector((state) => state.favorites.favoritesItems);
 
-  console.log(favoritesItems);
   //удалить товар
   const removeItemFromFavorites = (product) => {
     dispatch(favoritesActions.removeItemFromFavorites(product));
