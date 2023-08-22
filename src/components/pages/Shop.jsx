@@ -91,6 +91,13 @@ const Shop = () => {
     <>
       <div class="nav">
         <ul class="topcategory">
+        <li><a
+            onClick={() => {
+              console.log('tochno');
+              dispatch(categoryActions.setCategoryValue('all'));
+            }}
+          >ВСЕ</a>
+          </li>
           <li><a
             onClick={() => {
               console.log('tochno');
