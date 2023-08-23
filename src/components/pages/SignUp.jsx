@@ -24,7 +24,7 @@ const SignUp = () => {
     e.preventDefault(); 
     setLoading(true);
     try {
-      const response = await axios.post('http://164.92.99.90:8000/api-account/register/', formValueSignUp);
+      const response = await axios.post('https://team3back.sanarip.org/api/account/register/', formValueSignUp);
       setLoading(false);
       toast.success('Аккаунт создан!');
       navigate('/login');
