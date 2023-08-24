@@ -6,7 +6,11 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY src ./src
+
+COPY public ./public
+
+COPY Dockerfile ./
 
 RUN npm run build
 

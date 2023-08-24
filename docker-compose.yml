@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: leonidll/team-3-front-react
+    ports:
+      - "8083:8083" 
+    volumes:
+      - .:/app 
