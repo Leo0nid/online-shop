@@ -1,11 +1,13 @@
-version: '3'
+version: '3.8'
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: leonidll/frontend-online-shop
+    image: leonidll/front-end
     ports:
-      - "8083:8083"
+      - "8083:3000"
     volumes:
-      - .:/app 
+      - .:/app
+    container_name: front-shop
+    command: npm start
